@@ -23,4 +23,5 @@ erl_crash.dump
 thx_core-*.tar
 
 .elixir_ls
+.DS_Store
 
