@@ -9,6 +9,7 @@ defmodule ThxCore.Application do
     # List all child processes to be supervised
     children = [
       {Registry, [keys: :unique, name: ThxCore.SensorRegistry]},
+      {Registry, [keys: :unique, name: ThxCore.TemperatureWriterRegistry]},
       # {Postgrex, Keyword.put(Application.get_env(:thx_core, :db), :name, DB)},
       ThxCore.Repo,
       {ThxCore.SensorSupervisor, []}

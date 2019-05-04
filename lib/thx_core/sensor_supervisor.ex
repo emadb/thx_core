@@ -6,16 +6,20 @@ defmodule ThxCore.SensorSupervisor do
   end
 
   def init(:ok) do
-    children = [
-      %{
-        id: "28-100",
-        start: {ThxCore.SensorProcess, :start_link, ["28-100"]}
-      },
-      %{
-        id: "28-200",
-        start: {ThxCore.SensorProcess, :start_link, ["28-200"]}
-      },
-    ]
+
+    children = ThxCore.Schema.Sensor
+      |> ThxCore.Repo.all
+      |> Enum.map(fn s ->
+        [%{
+          id: s.name,
+          start: {ThxCore.SensorProcess, :start_link, [s.name, s.description]}
+        }, %{
+          id: s.name,
+          start: {ThxCore.TemperatureWriter, :start_link, [s.id, s.name]}
+        },]
+      end)
+      |> Enum.flat_map(fn x -> x end)
+
     Supervisor.init(children, strategy: :one_for_one)
   end
 end
