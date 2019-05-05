@@ -1,7 +1,7 @@
 defmodule ThxCore.SensorProcess do
   use GenServer
 
-  @reading_interval 5_000
+  @reading_interval 500_000
 
 
   def init([name, description]) do

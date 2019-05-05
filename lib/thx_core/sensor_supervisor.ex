@@ -11,10 +11,10 @@ defmodule ThxCore.SensorSupervisor do
       |> ThxCore.Repo.all
       |> Enum.map(fn s ->
         [%{
-          id: s.name,
+          id: "sensor_#{s.name}",
           start: {ThxCore.SensorProcess, :start_link, [s.name, s.description]}
         }, %{
-          id: s.name,
+          id: "writer_#{s.name}",
           start: {ThxCore.TemperatureWriter, :start_link, [s.id, s.name]}
         },]
       end)

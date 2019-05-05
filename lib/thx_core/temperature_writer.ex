@@ -10,7 +10,7 @@ defmodule ThxCore.TemperatureWriter do
   end
 
   defp via_tuple(name) do
-    {:via, Registry, {ThxCore.TemperatureWriterRegistry, name}}
+    {:via, Registry, {ThxCore.TemperatureWriterRegistry, "writer_#{name}"}}
   end
 
   def write_temperature(name, temperature) do
@@ -21,10 +21,10 @@ defmodule ThxCore.TemperatureWriter do
 
     value = %ThxCore.Schema.Temperature{
       sensor_id: state.id,
-      date: "",
+      date: DateTime.utc_now,
       value: temperature
     }
-    ThxCore.Schema.Temperature.insert(value)
+    ThxCore.Repo.insert(value)
     {:reply, :ok, state}
   end
 end
