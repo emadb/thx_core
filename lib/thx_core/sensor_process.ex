@@ -1,7 +1,7 @@
 defmodule ThxCore.SensorProcess do
   use GenServer
 
-  @reading_interval 500_000
+  @reading_interval 5000
   @sensor_reader Application.get_env(:thx_core, :sensor_reader)
 
 
@@ -33,6 +33,7 @@ defmodule ThxCore.SensorProcess do
   def handle_info(:get_temperature_scheduled, state) do
     temp = @sensor_reader.read_temp(state.name)
     Process.send_after(self(), :get_temperature_scheduled, @reading_interval)
+    ThxCore.TemperatureWriter.write_temperature(state.name, temp)
     {:noreply, state}
   end
 end
