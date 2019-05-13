@@ -16,7 +16,10 @@ defmodule ThxCore.SensorSupervisor do
         }, %{
           id: "writer_#{s.name}",
           start: {ThxCore.TemperatureWriter, :start_link, [s.id, s.name]}
-        },]
+        },%{
+          id: "scheduler_#{s.name}",
+          start: {ThxCore.ScheduleProcess, :start_link, [s.id, s.name]}
+        }]
       end)
       |> Enum.flat_map(&(&1))
 

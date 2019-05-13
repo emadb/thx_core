@@ -10,6 +10,7 @@ defmodule ThxCore.Application do
     children = [
       {Registry, [keys: :unique, name: ThxCore.SensorRegistry]},
       {Registry, [keys: :unique, name: ThxCore.TemperatureWriterRegistry]},
+      {Registry, [keys: :unique, name: ThxCore.TemperatureScheduleRegistry]},
       # {Postgrex, Keyword.put(Application.get_env(:thx_core, :db), :name, DB)},
       ThxCore.Repo,
       {ThxCore.SensorSupervisor, []}
