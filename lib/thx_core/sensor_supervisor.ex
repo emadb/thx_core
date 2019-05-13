@@ -18,7 +18,7 @@ defmodule ThxCore.SensorSupervisor do
           start: {ThxCore.TemperatureWriter, :start_link, [s.id, s.name]}
         },]
       end)
-      |> Enum.flat_map(fn x -> x end)
+      |> Enum.flat_map(&(&1))
 
     Supervisor.init(children, strategy: :one_for_one)
   end

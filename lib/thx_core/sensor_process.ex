@@ -25,15 +25,14 @@ defmodule ThxCore.SensorProcess do
   end
 
   def handle_call(:get_temperature, _from, state) do
-    # TODO use behaviours for testing
     temp = @sensor_reader.read_temp(state.name)
     {:reply, {:ok, temp}, state}
   end
 
   def handle_info(:get_temperature_scheduled, state) do
     temp = @sensor_reader.read_temp(state.name)
-    Process.send_after(self(), :get_temperature_scheduled, @reading_interval)
     ThxCore.TemperatureWriter.write_temperature(state.name, temp)
+    Process.send_after(self(), :get_temperature_scheduled, @reading_interval)
     {:noreply, state}
   end
 end
