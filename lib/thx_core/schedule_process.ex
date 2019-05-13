@@ -20,10 +20,11 @@ defmodule ThxCore.ScheduleProcess do
     GenServer.call(via_tuple(name), {:update_thermostat, temperature})
   end
 
-  def handle_call({:update_thermostat, temperature}, _from, state) do
+  def get_schedule(name) do
+    GenServer.call(via_tuple(name), :get_schedule)
+  end
 
-    IO.inspect temperature, label: "SCHEDULE PROCESS"
-
-    {:reply, :ok, state}
+  def handle_call(:get_schedule, _from, state) do
+    {:reply, state.schedule, state}
   end
 end
