@@ -2,6 +2,8 @@ defmodule ThxCore.ScheduleProcess do
   use GenServer
   import Ecto.Query, only: [from: 2]
 
+  @thermostat_writer Application.get_env(:thx_core, :thermostat_writer)
+
   def init([id, name]) do
     schedule = ThxCore.Repo.all(from s in ThxCore.Schema.Schedule, where: s.sensor_id == ^id, select: {s.weekday, s.temperature})
 
@@ -25,10 +27,8 @@ defmodule ThxCore.ScheduleProcess do
   end
 
   def handle_call(:get_schedule, _from, state) do
-    ss = ThxCore.Schema.Schedule
-      |> ThxCore.Repo.all
 
-    IO.inspect ss, label: ">>>>>>>>>>"
+    @thermostat_writer.switch_on("")
 
     {:reply, state.schedule, state}
   end

@@ -4,7 +4,7 @@ defmodule ThxCore.ScheduleProcessTest do
   import Mox
 
 
-
+  setup :set_mox_global
   setup :verify_on_exit!
 
   test "Temperature goes under threshold, thermostat should switch on" do
@@ -14,6 +14,6 @@ defmodule ThxCore.ScheduleProcessTest do
 
     ## TODO: 1 is not always valid, we need to query the database to know the id??
     ThxCore.ScheduleProcess.start_link(1, "one")
-    IO.inspect ThxCore.ScheduleProcess.get_schedule("one"), label: "Schedule>>>"
+    ThxCore.ScheduleProcess.get_schedule("one")
   end
 end
