@@ -14,6 +14,7 @@ defmodule ThxCore.ScheduleProcessTest do
 
     ## TODO: 1 is not always valid, we need to query the database to know the id??
     ThxCore.ScheduleProcess.start_link(1, "one")
-    ThxCore.ScheduleProcess.get_schedule("one")
+
+    ThxCore.ScheduleProcess.update_thermostat("one", 5)
   end
 end

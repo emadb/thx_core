@@ -22,14 +22,21 @@ defmodule ThxCore.ScheduleProcess do
     GenServer.call(via_tuple(name), {:update_thermostat, temperature})
   end
 
-  def get_schedule(name) do
-    GenServer.call(via_tuple(name), :get_schedule)
-  end
+  def handle_call({:update_thermostat, temp}, _from, state) do
 
-  def handle_call(:get_schedule, _from, state) do
+    {_, {h, _, _}} = :calendar.local_time()
+    [{_, sch}] = state.schedule
 
-    @thermostat_writer.switch_on("")
+    case temp > Enum.at(sch, h) do
+      true ->
+        {:reply, :nop, state}
+      false ->
+        @thermostat_writer.switch_on(state.name)
+        {:reply, :on, state}
+    end
 
-    {:reply, state.schedule, state}
+
+
+
   end
 end
