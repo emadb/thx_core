@@ -27,16 +27,15 @@ defmodule ThxCore.ScheduleProcess do
     {_, {h, _, _}} = :calendar.local_time()
     [{_, sch}] = state.schedule
 
-    case temp > Enum.at(sch, h) do
-      true ->
-        {:reply, :nop, state}
-      false ->
-        @thermostat_writer.switch_on(state.name)
-        {:reply, :on, state}
-    end
+    switch_thermostat(temp, Enum.at(sch, h), state)
+  end
 
+  defp switch_thermostat(temp, needed_temp, state) when temp > needed_temp do
+    {:reply, :nop, state}
+  end
 
-
-
+  defp switch_thermostat(_temp, _needed_temp, state) do
+    @thermostat_writer.switch_on(state.name)
+    {:reply, :on, state}
   end
 end
