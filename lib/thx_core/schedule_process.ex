@@ -25,6 +25,11 @@ defmodule ThxCore.ScheduleProcess do
   end
 
   def handle_call(:get_schedule, _from, state) do
+    ss = ThxCore.Schema.Schedule
+      |> ThxCore.Repo.all
+
+    IO.inspect ss, label: ">>>>>>>>>>"
+
     {:reply, state.schedule, state}
   end
 end
