@@ -18,7 +18,7 @@ defmodule ThxCore.MixProject do
 
   defp aliases do
     [
-     "test": ["ecto.drop", "ecto.create --quiet", "ecto.migrate", "run priv/repo/seeds.exs", "test"]
+     test: ["ecto.drop", "ecto.create --quiet", "ecto.migrate", "run priv/repo/seeds.exs", "test"]
     ]
   end
   # Run "mix help compile.app" to learn about applications.
