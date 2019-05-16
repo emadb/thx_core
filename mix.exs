@@ -34,7 +34,8 @@ defmodule ThxCore.MixProject do
     [
       {:postgrex, "~> 0.14.1"},
       {:ecto_sql, "~> 3.0"},
-      {:mox, "~> 0.5.0"}
+      {:mox, "~> 0.5.0"},
+      {:elixir_ale, "~> 1.2"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

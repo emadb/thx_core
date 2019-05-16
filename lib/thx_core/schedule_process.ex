@@ -31,6 +31,7 @@ defmodule ThxCore.ScheduleProcess do
   end
 
   defp switch_thermostat(temp, needed_temp, state) when temp > needed_temp do
+    @thermostat_writer.switch_off(state.name)
     {:reply, :nop, state}
   end
 
