@@ -5,6 +5,7 @@ defmodule ThxCore.Repo.Migrations.CreateSensorsTable do
     create table(:sensor) do
       add :name, :string
       add :description, :string
+      add :gpio, :integer
     end
   end
 end

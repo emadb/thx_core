@@ -3,12 +3,14 @@ alias ThxCore.Schema.Schedule
 
 s1 = ThxCore.Repo.insert! %Sensor{
   name: "one",
-  description: "sensor one"
+  description: "sensor one",
+  gpio: 1
 }
 
 ThxCore.Repo.insert! %Sensor{
   name: "two",
-  description: "sensor two"
+  description: "sensor two",
+  gpio: 2
 }
 
 ThxCore.Repo.insert! %Schedule{

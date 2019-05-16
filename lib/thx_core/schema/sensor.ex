@@ -4,5 +4,6 @@ defmodule ThxCore.Schema.Sensor do
   schema "sensor" do
     field :name, :string
     field :description, :string
+    field :gpio, :integer
   end
 end
