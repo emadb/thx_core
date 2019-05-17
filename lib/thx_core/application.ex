@@ -11,6 +11,7 @@ defmodule ThxCore.Application do
       {Registry, [keys: :unique, name: ThxCore.SensorRegistry]},
       {Registry, [keys: :unique, name: ThxCore.TemperatureWriterRegistry]},
       {Registry, [keys: :unique, name: ThxCore.TemperatureScheduleRegistry]},
+      {Registry, [keys: :unique, name: ThxCore.GpioRegistry]},
       # {Postgrex, Keyword.put(Application.get_env(:thx_core, :db), :name, DB)},
       ThxCore.Repo,
       {ThxCore.ApplicationSupervisor, []}
