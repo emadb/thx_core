@@ -1,3 +1,5 @@
+## TODO: REMOVE! Use GPIO Proxy directly
+
 defmodule ThxCore.IO.ThermostatWriterBehaviour do
   @callback switch_on(String.t) :: :ok
   @callback switch_off(String.t) :: :ok
@@ -9,13 +11,13 @@ defmodule ThxCore.IO.ThermostatWriter do
 
   @impl ThxCore.IO.ThermostatWriterBehaviour
   def switch_on(sensor) do
-    Logger.debug("Sensor: #{sensor} switch on")
+    ThxCore.GpioProxy.write_on(sensor)
     :ok
   end
 
   @impl ThxCore.IO.ThermostatWriterBehaviour
   def switch_off(sensor) do
-    Logger.debug("Sensor: #{sensor} switch off")
+    ThxCore.GpioProxy.write_off(sensor)
     :ok
   end
 end
