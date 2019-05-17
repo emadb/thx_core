@@ -13,7 +13,7 @@ defmodule ThxCore.Application do
       {Registry, [keys: :unique, name: ThxCore.TemperatureScheduleRegistry]},
       # {Postgrex, Keyword.put(Application.get_env(:thx_core, :db), :name, DB)},
       ThxCore.Repo,
-      {ThxCore.SensorSupervisor, []}
+      {ThxCore.ApplicationSupervisor, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

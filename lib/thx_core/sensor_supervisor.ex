@@ -1,28 +1,39 @@
 defmodule ThxCore.SensorSupervisor do
   use Supervisor
+  # @gpio ElixirALE.GPIO
+  @gpio FakeGpio
 
-  def start_link(opts) do
-    Supervisor.start_link(__MODULE__, :ok, opts)
+  def start_link(args) do
+    Supervisor.start_link(__MODULE__, args)
   end
 
-  def init(:ok) do
+  def init([id, name, description, gpio]) do
 
-    children = ThxCore.Schema.Sensor
-      |> ThxCore.Repo.all
-      |> Enum.map(fn s ->
-        [%{
-          id: "sensor_#{s.name}",
-          start: {ThxCore.SensorProcess, :start_link, [s.name, s.description]}
-        }, %{
-          id: "writer_#{s.name}",
-          start: {ThxCore.TemperatureWriter, :start_link, [s.id, s.name]}
-        },%{
-          id: "scheduler_#{s.name}",
-          start: {ThxCore.ScheduleProcess, :start_link, [s.id, s.name]}
-        }]
-      end)
-      |> Enum.flat_map(&(&1))
+    children = [%{
+            id: "sensor_#{name}",
+            start: {ThxCore.SensorProcess, :start_link, [name, description]}
+          }, %{
+            id: "writer_#{name}",
+            start: {ThxCore.TemperatureWriter, :start_link, [id, name]}
+          }, %{
+            id: "scheduler_#{name}",
+            start: {ThxCore.ScheduleProcess, :start_link, [id, name]}
+          }, %{
+            id: "gpio_#{name}",
+            start: {@gpio, :start_link, [gpio, :output]}
+          }
+        ]
+      Supervisor.init(children, strategy: :one_for_one)
+  end
+end
 
-    Supervisor.init(children, strategy: :one_for_one)
+
+defmodule FakeGpio do
+  use GenServer
+
+  def init(_), do: {:ok, []}
+
+  def start_link(port, direction) do
+    GenServer.start_link(__MODULE__, [port, direction])
   end
 end

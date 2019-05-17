@@ -26,7 +26,7 @@ defmodule ThxCore.IO.FakeThermostatWriter do
   @impl ThxCore.IO.ThermostatWriterBehaviour
   def switch_on(_sensor), do: :ok
   @impl ThxCore.IO.ThermostatWriterBehaviour
-  def switch_off(_sensor, _dir), do: :ok
+  def switch_off(_sensor), do: :ok
 
 end
 
