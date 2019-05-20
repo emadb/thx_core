@@ -2,7 +2,7 @@ defmodule ThxCore.ScheduleProcess do
   use GenServer
   import Ecto.Query, only: [from: 2]
 
-  @thermostat_writer Application.get_env(:thx_core, :thermostat_writer)
+  @gpio_proxy Application.get_env(:thx_core, :gpio_proxy)
 
   def init([id, name]) do
     schedule = ThxCore.Repo.all(from s in ThxCore.Schema.Schedule, where: s.sensor_id == ^id, select: {s.weekday, s.temperature})
@@ -27,16 +27,16 @@ defmodule ThxCore.ScheduleProcess do
     {_, {h, _, _}} = :calendar.local_time()
     [{_, sch}] = state.schedule
 
-    switch_thermostat(temp, Enum.at(sch, h), state)
+    toggle_thermostat(temp, Enum.at(sch, h), state)
   end
 
-  defp switch_thermostat(temp, needed_temp, state) when temp > needed_temp do
-    @thermostat_writer.switch_off(state.name)
+  defp toggle_thermostat(temp, needed_temp, state) when temp > needed_temp do
+    @gpio_proxy.write_off(state.name)
     {:reply, :nop, state}
   end
 
-  defp switch_thermostat(_temp, _needed_temp, state) do
-    @thermostat_writer.switch_on(state.name)
+  defp toggle_thermostat(_temp, _needed_temp, state) do
+    @gpio_proxy.write_on(state.name)
     {:reply, :on, state}
   end
 end

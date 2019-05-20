@@ -1,10 +1,16 @@
+
+defmodule ThxCore.GpioProxyBehaviour do
+  @callback write_on(String.t) :: :ok
+  @callback write_off(String.t) :: :ok
+end
+
+
 defmodule ThxCore.GpioProxy do
   use GenServer
-  @gpio FakeGpio
-  # @gpio ElixirALE.GPIO
+  @behaviour ThxCore.GpioProxyBehaviour
 
   def init([name, port]) do
-    {:ok, pid} = @gpio.start_link(port, :output)
+    {:ok, pid} = ElixirALE.GPIO.start_link(port, :output)
     {:ok, %{name: name, port: port, pid: pid}}
   end
 
@@ -25,20 +31,21 @@ defmodule ThxCore.GpioProxy do
   end
 
   def handle_call(:write_on, _from, state = %{pid: pid}) do
-    @gpio.write(pid, 1)
+    ElixirALE.GPIO.write(pid, 1)
     {:reply, :ok, state}
   end
 
   def handle_call(:write_off, _from, state = %{pid: pid}) do
-    @gpio.write(pid, 0)
+    ElixirALE.GPIO.write(pid, 0)
     {:reply, :ok, state}
   end
 
 end
 
 
-defmodule FakeGpio do
+defmodule ThxCore.FakeGpioProxy do
   use GenServer
+  @behaviour ThxCore.GpioProxyBehaviour
 
   def init(_), do: {:ok, []}
 
@@ -46,5 +53,6 @@ defmodule FakeGpio do
     GenServer.start_link(__MODULE__, [port, direction], name: String.to_atom(Integer.to_string(port)))
   end
 
-  def write(_), do: :ok
+  def write_on(_), do: :ok
+  def write_off(_), do: :ok
 end
