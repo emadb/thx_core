@@ -1,5 +1,5 @@
 use Mix.Config
-config :thx_core, ThxCore.Repo,
+config :thx_data, ThxData.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "thermox_test",
   username: "ema",

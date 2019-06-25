@@ -11,13 +11,13 @@ use Mix.Config
 #   password: ""
 # ]
 
-config :thx_core, ThxCore.Repo,
+config :thx_data, ThxData.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "thermox",
   username: "ema",
   password: ""
 
-config :thx_core, ecto_repos: [ThxCore.Repo]
+config :thx_data, ecto_repos: [ThxData.Repo]
 
 import_config "#{Mix.env()}.exs"
 

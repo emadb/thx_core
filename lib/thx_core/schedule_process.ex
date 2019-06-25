@@ -5,7 +5,7 @@ defmodule ThxCore.ScheduleProcess do
   @gpio_proxy Application.get_env(:thx_core, :gpio_proxy)
 
   def init([id, name]) do
-    schedule = ThxCore.Repo.all(from s in ThxCore.Schema.Schedule, where: s.sensor_id == ^id, select: {s.weekday, s.temperature})
+    schedule = ThxData.Repo.all(from s in ThxData.Schema.Schedule, where: s.sensor_id == ^id, select: {s.weekday, s.temperature})
 
     {:ok, %{id: id, name: name, schedule: schedule}}
   end

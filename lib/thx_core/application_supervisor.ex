@@ -6,8 +6,8 @@ defmodule ThxCore.ApplicationSupervisor do
   end
 
   def init(:ok) do
-    children = ThxCore.Schema.Sensor
-      |> ThxCore.Repo.all
+    children = ThxData.Schema.Sensor
+      |> ThxData.Repo.all
       |> Enum.map(fn s ->
         %{
           id: "supervisor_#{s.name}",

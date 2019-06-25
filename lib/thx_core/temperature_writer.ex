@@ -19,12 +19,12 @@ defmodule ThxCore.TemperatureWriter do
 
   def handle_call({:write_temperature, temperature}, _from, state) do
 
-    value = %ThxCore.Schema.Temperature{
+    value = %ThxData.Schema.Temperature{
       sensor_id: state.id,
       date: DateTime.utc_now,
       value: temperature
     }
-    ThxCore.Repo.insert(value)
+    ThxData.Repo.insert(value)
     {:reply, :ok, state}
   end
 end

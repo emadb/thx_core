@@ -3,7 +3,7 @@ defmodule ThxCore.RepoCase do
 
   using do
     quote do
-      alias ThxCore.Repo
+      alias ThxData.Repo
 
       import Ecto
       import Ecto.Query
@@ -14,10 +14,10 @@ defmodule ThxCore.RepoCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ThxCore.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(ThxData.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(ThxCore.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(ThxData.Repo, {:shared, self()})
     end
 
     :ok
