@@ -50,7 +50,7 @@ defmodule ThxCore.FakeGpioProxy do
   def init(_), do: {:ok, []}
 
   def start_link(port, direction) do
-    GenServer.start_link(__MODULE__, [port, direction], name: String.to_atom(Integer.to_string(port)))
+    GenServer.start_link(__MODULE__, [port, direction], name: String.to_atom(port))
   end
 
   def write_on(_), do: :ok
