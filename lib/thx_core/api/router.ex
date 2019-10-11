@@ -11,6 +11,8 @@ defmodule ThxCore.Api.Router do
     send_resp(conn, 200, encode(%{message: "pong"}))
   end
 
+  forward "/sensors", to: ThxCore.Api.SensorsRouter
+
   defp encode(data) do
     Poison.encode!(data)
   end
