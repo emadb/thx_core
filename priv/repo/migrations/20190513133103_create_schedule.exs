@@ -4,7 +4,7 @@ defmodule ThxCore.Repo.Migrations.CreateSchedule do
   def change do
     create table(:schedule) do
       add :sensor_id, references(:sensor)
-      add :weekday, :integer
+      add :weekday, :string
       add :temperature, {:array, :integer}
     end
 
