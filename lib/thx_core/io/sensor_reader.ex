@@ -23,7 +23,7 @@ defmodule ThxCore.IO.SensorReader do
     |> List.last
     |> Float.parse
     Logger.debug("Sensor: #{sensor} Temp: #{temp}")
-    temp
+    temp / 1000
   end
 
 end
