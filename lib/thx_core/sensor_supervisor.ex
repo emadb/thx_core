@@ -1,6 +1,8 @@
 defmodule ThxCore.SensorSupervisor do
   use Supervisor
 
+  @gpio_proxy Application.get_env(:thx_core, :gpio_proxy)
+
   def start_link(args) do
     Supervisor.start_link(__MODULE__, args)
   end
@@ -18,7 +20,7 @@ defmodule ThxCore.SensorSupervisor do
       start: {ThxCore.ScheduleProcess, :start_link, [id, name]}
     }, %{
       id: "gpio_#{name}",
-      start: {ThxCore.GpioProxy, :start_link, [name, gpio]}
+      start: {@gpio_proxy, :start_link, [name, gpio]}
     }]
 
     Supervisor.init(children, strategy: :one_for_one)

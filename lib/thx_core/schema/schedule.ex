@@ -3,7 +3,7 @@ defmodule ThxCore.Schema.Schedule do
 
   schema "schedule" do
     belongs_to :sensor, ThxCore.Schema.Sensor
-    field :weekday, :integer
+    field :weekday, :string
     field :temperature, {:array, :integer}
   end
 end

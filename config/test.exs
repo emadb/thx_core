@@ -7,4 +7,4 @@ config :thx_core, ThxCore.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :thx_core, sensor_reader: ThxCore.IO.FakeSensorReader
-config :thx_core, gpio_proxy: Test.GpioProxyMock
+config :thx_core, gpio_proxy: ThxCore.FakeGpioProxy

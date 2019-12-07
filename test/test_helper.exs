@@ -4,4 +4,4 @@ Ecto.Adapters.SQL.Sandbox.mode(ThxCore.Repo, :manual)
 
 # Code.eval_file "priv/repo/seeds.exs"
 
-Mox.defmock(Test.GpioProxyMock, for: ThxCore.GpioProxyBehaviour)
+# Mox.defmock(Test.GpioProxyMock, for: ThxCore.GpioProxyBehaviour)
