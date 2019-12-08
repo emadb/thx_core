@@ -31,12 +31,12 @@ defmodule ThxCore.GpioProxy do
   end
 
   def handle_call(:write_on, _from, state = %{pid: pid}) do
-    ElixirALE.GPIO.write(pid, 1)
+    ElixirALE.GPIO.write(pid, 0)
     {:reply, :ok, state}
   end
 
   def handle_call(:write_off, _from, state = %{pid: pid}) do
-    ElixirALE.GPIO.write(pid, 0)
+    ElixirALE.GPIO.write(pid, 1)
     {:reply, :ok, state}
   end
 
